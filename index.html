@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lucky Numbers in a Matrix (LeetCode 1380): Row Minimums Meet Column Maximums</title><meta name="description" content="Lucky Numbers in a Matrix explained with the row-min and column-max intersection, plus why there is at most one answer."><style>body{max-width:720px;margin:2rem auto;padding:0 1rem;font:17px/1.6 system-ui,sans-serif;color:#222}pre{background:#f4f4f4;padding:1rem;overflow:auto}</style></head><body><h1>Lucky Numbers in a Matrix (LeetCode 1380): Row Minimums Meet Column Maximums</h1>
+<p>Given an m by n matrix of distinct numbers, a lucky number is the minimum element in its row and the maximum element in its column. Return all lucky numbers.</p>
+<h2>The direct approach</h2>
+<p>Compute every row minimum and every column maximum, then return the values that appear in both sets. Because the numbers are distinct, a value that is both a row minimum and a column maximum must be the same cell.</p>
+<pre><code class="language-python">def luckyNumbers(matrix):
+    row_min = {min(row) for row in matrix}
+    col_max = {max(col) for col in zip(*matrix)}
+    return list(row_min &amp; col_max)
+</code></pre>
+<p>That is O(m*n) time and O(m+n) extra space.</p>
+<h2>The follow-up interviewers like</h2>
+<p>There is at most one lucky number. Suppose a at (r1, c1) and b at (r2, c2) were both lucky. Then a is at most matrix[r1][c2], which is at most b because b is its column maximum, and by the same argument b is at most a. Distinct values make that impossible. So you can return early: take the largest row minimum and the smallest column maximum, and they are lucky only if they are equal.</p>
+<pre><code class="language-python">def luckyNumbers(matrix):
+    a = max(min(row) for row in matrix)
+    b = min(max(col) for col in zip(*matrix))
+    return [a] if a == b else []
+</code></pre>
+<h2>What to say out loud</h2>
+<ul><li>Name the two sets first, then the intersection.</li>
+<li>Offer the uniqueness proof only after the basic solution works.</li>
+<li>Point out that zip(*matrix) transposes without extra loops.</li></ul>
+<p>To practise talking through small proofs like this under time pressure, <a href="https://www.linkjob.ai/">Linkjob AI copilot</a> can follow along in mock interviews (disclosure: I work on Linkjob AI).</p>
+</body></html>
